@@ -112,17 +112,20 @@ char pattern[100];
     if(MATCH("device","port"))
     {
         port = atoi(value);
+        return 1;
     }
 
 
     if(MATCH("device","numeric_outs_max"))
     {
         sws[port].numeric_outs_max = atoi(value);
+        return 1;
     }
 
     if(MATCH("device","discrete_outs_max"))
     {
         sws[port].discrete_outs_max = atoi(value);
+        return 1;
     }
 
 
@@ -133,7 +136,7 @@ char pattern[100];
       if(strcmp(section, "serial") == 0 && strcmp(name, pattern) == 0)
       {
          strcpy(sws[i].serial_port,value);
-
+         return 1;
       }
     }
 
