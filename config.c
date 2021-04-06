@@ -10,7 +10,6 @@
 
 CONFIG config;
 static int cfg_item = -1;
-static int ind_item = -1;
 static int input_item = -1;
 static int port = 0;
 
@@ -176,8 +175,7 @@ char pattern[100];
        key_id = input_item;
      } else
      {
-       ind_item++;
-       key_id = ind_item;
+       key_id = cfg_item;
      }
 
      if(0 == strcmp(name, "mode"))
@@ -351,7 +349,6 @@ int load_config(char *path)
         key_config[i].mode = -1;
 
     cfg_item = -1;
-    ind_item = -1;
     input_item = -1;
     port = 0;
 

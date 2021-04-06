@@ -49,7 +49,7 @@ void display_update(SESSION_WORK_SPACE *sws)
 {
 #if 1
     char buf[1+3+8*48+1];
-    int i,key_code;
+    int i;
     char tmp_buf[16];
     char fmt_buf[16];
     int tmp_int;
@@ -70,22 +70,12 @@ void display_update(SESSION_WORK_SPACE *sws)
 
        if(key_config[i].mode == MODE_POLL && key_config[i].len)
        {
-          key_code = i;//key_config[i].key_id;
 
-#if 0
-       if(key_config[i].encoding == HEX || key_config[i].encoding == BCD)
-       {
-         sprintf(tmp_buf,get_fmt_hex(fmt_buf,key_config[i].len),output_data[key_code]);
-       }
-       else
-#endif
-       {
          if(key_config[i].opt & 1)
-           sprintf(tmp_buf,get_fmt0(fmt_buf,key_config[i].len),output_data[key_code]);
+           sprintf(tmp_buf,get_fmt0(fmt_buf,key_config[i].len),output_data[i]);
          else
-           sprintf(tmp_buf,get_fmt(fmt_buf,key_config[i].len),output_data[key_code]);
-       }
-        //((devs-1)-key_config[i].devadr)
+           sprintf(tmp_buf,get_fmt(fmt_buf,key_config[i].len),output_data[i]);
+
         memcpy(&buf[
                       4+8*key_config[i].devadr
                         +  key_config[i].pos],
@@ -123,8 +113,7 @@ void lamps_update(SESSION_WORK_SPACE *sws)
      {
        if(key_config[i].mode == MODE_POLL && key_config[i].len == 0)
        {
-         key_code = i;
-         buf[1+3+ key_config[i].pos] = '0' + (output_data[key_code] & 1);
+         buf[1+3+ key_config[i].pos] = '0' + (output_data[i] & 1);
        }
 
      }

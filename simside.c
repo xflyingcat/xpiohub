@@ -357,9 +357,16 @@ void pass_to_sim(ULONG64 ev_container, int level)
 #endif
    if(0==strcmp(config.debug_keyinfo,"on"))
    {
-     log_write("Port: %d Key%03d %s", (key_code >> 8) & 0x0F,
-                                      key_code & 0xFF,
-                                      event_type[level+1]);
+     //log_write("Port: %d Key%03d %s", (key_code >> 8) & 0x0F,
+     //                                 key_code & 0xFF,
+     //                                 event_type[level+1]);
+     log_write("event_type:%03d port_id:%02d event_id:%04X(%04d) value:%d",
+            ev->event_type,
+            ev->port_id,
+            ev->event_id,
+            ev->event_id,
+            ev->value
+            );
    }
 
    for(i=0;i<MAX_KEYS;i++)
@@ -576,7 +583,7 @@ void poll_dataref(void)
 {
 int tmp_int;
 float tmp_float;
-int key_code = 0,i;
+int i;
 
    for(i=0;i<MAX_KEYS;i++)
    {
@@ -586,7 +593,7 @@ int key_code = 0,i;
     }
     if(key_config[i].mode == MODE_POLL)
     {
-       key_code = key_config[i].key_id;
+       //key_code = key_config[i].key_id;
        if(key_config[i].dref != NULL)
        {
            if(key_config[i].factor == 0.0)
@@ -605,13 +612,13 @@ int key_code = 0,i;
              if(key_config[i].mask)
              {
                if(tmp_int & key_config[i].mask)
-                   output_data[key_code] = 1;
+                   output_data[i] = 1;
                else
                {
-                  output_data[key_code] = 0;
+                  output_data[i] = 0;
                }
              } else
-             output_data[key_code] = tmp_int * key_config[i].factor + key_config[i].offset;
+             output_data[i] = tmp_int * key_config[i].factor + key_config[i].offset;
 
            }
            else if(key_config[i].type == TYPE_FLOAT)
@@ -625,13 +632,13 @@ int key_code = 0,i;
 
              if(key_config[i].len)
              {
-               output_data[key_code] = tmp_float * key_config[i].factor + key_config[i].offset;
+               output_data[i] = tmp_float * key_config[i].factor + key_config[i].offset;
              } else
                 {
                   if(tmp_float > 0.5)
-                       output_data[key_code] = 1;
+                       output_data[i] = 1;
                   else
-                       output_data[key_code] = 0;
+                       output_data[i] = 0;
                 }
            }
        }
