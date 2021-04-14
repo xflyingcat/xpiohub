@@ -5,7 +5,7 @@
   If we meet some day, and you think this stuff is worth it,
   you can buy me a beer in return.
 ----------------------------------------------------------*/
-#define  PLUGIN_REVISION  "0.8.0"
+#define  PLUGIN_REVISION  "0.8.1"
 
 #ifndef __INCLUDES_H__
 #define __INCLUDES_H__

@@ -111,6 +111,7 @@ char pattern[100];
     if(MATCH("device","port"))
     {
         port = atoi(value);
+        set_port_using_flag(port);
         return 1;
     }
 
@@ -347,6 +348,8 @@ int load_config(char *path)
     memset(key_config,0,sizeof(key_config));
     for(i=0;i<MAX_KEYS;i++)
         key_config[i].mode = -1;
+
+    clear_ports_using_flags();
 
     cfg_item = -1;
     input_item = -1;
